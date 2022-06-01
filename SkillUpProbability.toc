@@ -1,0 +1,13 @@
+## Interface: 
+## Title: Craftulator
+## Notes: Cumulative crafting probability calculator
+## Author: Shargul
+## Version: 1.0.0
+## DefaultState: enabled
+
+# For build info:
+# /run print((select(4, GetBuildInfo())))
+
+config.lua
+slashCommands.lua
+core.lua
