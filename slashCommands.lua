@@ -8,9 +8,7 @@ local function cmdHandler(msg)
 end
 
 -- Register Slash Commands
-function core:init(event, name)
-	if (name ~= "SkillUpProbability") then return end
-
+function core:init(event)
 	-- Allows usage of arrow keys in edit box without rotating character
 	for i = 1, NUM_CHAT_WINDOWS do
 		_G["ChatFrame"..i.."EditBox"]:SetAltArrowKeyMode(false)
@@ -29,6 +27,14 @@ function core:init(event, name)
 		FrameStackTooltip_Toggle()
 	end
 
+	-- Clear chat
+	SLASH_CLEARCHAT1 = "/clear"
+	SlashCmdList["CLEARCHAT"] = function()
+		SELECTED_CHAT_FRAME:Clear()
+	end
+
 	SLASH_SUP1 = "/sup"
 	SlashCmdList.SkillUpProbability = cmdHandler
+
+	core:Print("Add-on Loaded")
 end
