@@ -1,14 +1,11 @@
-local SkillUpProbability, SUP = ...
-SUP.Config = {}
+local SkillUpProbability, core = ...
+core.Config = {}
 
-local Config = SUP.config
+local Config = core.config
 
-local window = {
-	xOffset = 10,
-	yOffset = 10
-}
-
--- Allows usage of arrow keys in edit box without rotating character
-for i = 1, NUM_CHAT_WINDOWS do
-	_G["ChatFrame"..i.."EditBox"]:SetAltArrowKeyMode(false)
+-- HELPER FUNCTIONS --
+function core:Print(...)
+	color = "cff00ccff"
+	local prefix = string.format('\124' .. color .. "SkillUpProbability:" .. '\124r')
+	DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)))
 end
