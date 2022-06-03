@@ -1,6 +1,6 @@
 local SkillUpProbability, core = ...
 
-core.commands = {
+core.Commands = {
 }
 
 local function cmdHandler(msg)
