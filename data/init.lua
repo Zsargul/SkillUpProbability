@@ -1,0 +1,3 @@
+local SkillUpProbability, core = ...
+
+core.SpellData = {}

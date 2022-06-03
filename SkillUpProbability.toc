@@ -8,7 +8,9 @@
 # For build info:
 # /run print((select(4, GetBuildInfo())))
 
-events.lua
+data/init.lua
+data/spellData.lua
 config.lua
+events.lua
 slashCommands.lua
 core.lua
