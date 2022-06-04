@@ -49,7 +49,10 @@ function core:GetTradeSkillsHeaderless(...)
 	for i=1, GetNumTradeSkills() do
 		skillName, skillType, _, _, _, _ = GetTradeSkillInfo(i)
 		if (skillName and skillType ~= "header") then
-
+			print(core.SpellData[core:GetProfessionName()][skillName][1])
+			print(core.SpellData[core:GetProfessionName()][skillName][2])
+			print(core.SpellData[core:GetProfessionName()][skillName][3])
+			print(core.SpellData[core:GetProfessionName()][skillName][4])
 		end
 	end
 end
