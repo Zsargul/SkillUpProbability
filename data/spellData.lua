@@ -22,7 +22,7 @@ core.SpellData = {
                 ["Heavy Linen Bandage"]		 = {40,50,75,100},
                 ["Linen Bandage"]		 = {1,30,45,60},
                 ["Crystal Infused Bandage"]	 = {0,0,0,0}
-	}
+	},
 
 	-- Engineering
 	["Engineering"] = {
@@ -276,7 +276,7 @@ core.SpellData = {
                 ["Goblin Tonk Controller"]			= {0,0,0,0},
                 ["Mobile Alarm"]				= {0,0,0,0},
                 ["Red Smoke Flare"]				= {0,0,0,0}
-	}
+	},
 
 	-- Mining
 	["Mining"] = {
@@ -301,7 +301,7 @@ core.SpellData = {
                 ["Smelt Bronze"]		= {65,65,90,115},
                 ["Smelt Tin"]			= {65,65,70,75},
                 ["Smelt Copper"]		= {0,25,47,70}
-	}
+	},
 
 	-- Alchemy
 	["Alchemy"] = {
@@ -491,3 +491,5 @@ core.SpellData = {
                 ["Elixir of Tongues"]				= {0,0,0,0},
                 ["Elixir of Waterwalking"]			= {0,0,0,0},
                 ["Greater Holy Protection Potion"]		= {0,0,0,0}
+	},
+}
