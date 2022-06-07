@@ -28,7 +28,7 @@ function core:GetTableLength(table)
 end
 
 -- Get percentage chance of skill-up
-function core:GetChance(graySkill, playerSkill, yellowSkill)
+function core:CalcChance(graySkill, playerSkill, yellowSkill)
 	--[[ 
 	graySkill -> The level at which said spell turns gray
 	yellowSkill -> The level at which said spell turns yellow
@@ -38,21 +38,36 @@ function core:GetChance(graySkill, playerSkill, yellowSkill)
 	return chance
 end
 
--- Get ID for spell (craftable item)
-function core:GetSpellID(spell)
-	return select(7, GetSpellInfo(spell))
+function core:GetChance(skillName, skillType, profName)
+	local gray = SpellData[core:GetProfessionName[profName]][skillName][4]
+	local green = SpellData[core:GetProfessionName[profName]][skillName][3]
+	local yellow = SpellData[core:GetProfessionName[profName]][skillName][2]
+	local orange = SpellData[core:GetProfessionName[profName]][skillName][1] 
+	local playerSkill = core:GetProfessionLevel()
+	
+	local chance
+	if (playerSkill >= gray) then
+		chance = 0
+		return chance
+	else
+		chance = core:CalcChance(gray, playerSkill, yellow)
+	end
+
+	if (chance >= 1 or yellow == gray) then chance = 1 end
+
+	return chance
 end
 
 -- Get number of available trade skills (without headers)
 function core:GetTradeSkillsHeaderless(...)
 	local skillName, skillType
 	for i=1, GetNumTradeSkills() do
+		local profName = core:GetProfessionName()
 		skillName, skillType, _, _, _, _ = GetTradeSkillInfo(i)
 		if (skillName and skillType ~= "header") then
-			print(core.SpellData[core:GetProfessionName()][skillName][1])
-			print(core.SpellData[core:GetProfessionName()][skillName][2])
-			print(core.SpellData[core:GetProfessionName()][skillName][3])
-			print(core.SpellData[core:GetProfessionName()][skillName][4])
+			local chance = core:GetChance(skillName, skillType, profName)
+
+			-- Convert chance to percentage
 		end
 	end
 end
