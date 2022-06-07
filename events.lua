@@ -21,7 +21,7 @@ local function onEvent(self, event, addon)
 		--core:Print("TS: "..core:GetProfessionName())
 		--core:Print("LVL: "..core:GetProfessionLevel())
 		--print(core.SpellData["First Aid"]["27033"][1])
-		core:GetTradeSkillsHeaderless()
+		core:TradeSkillUpdateChance()	
 	end
 end
 

@@ -10,6 +10,6 @@
 
 data/spellData.lua
 config.lua
-events.lua
 slashCommands.lua
+events.lua
 core.lua

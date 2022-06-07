@@ -38,11 +38,17 @@ function core:CalcChance(graySkill, playerSkill, yellowSkill)
 	return chance
 end
 
+-- Round to a given amount of decimal places
+function core:Round(n, decimalPlaces)
+	local mult = 10^(decimalPlaces or 0)
+	return math.floor(n * mult + 0.5) / mult
+end
+
 function core:GetChance(skillName, skillType, profName)
-	local gray = SpellData[core:GetProfessionName[profName]][skillName][4]
-	local green = SpellData[core:GetProfessionName[profName]][skillName][3]
-	local yellow = SpellData[core:GetProfessionName[profName]][skillName][2]
-	local orange = SpellData[core:GetProfessionName[profName]][skillName][1] 
+	local gray = core.SpellData[core:GetProfessionName(profName)][skillName][4]
+	local green = core.SpellData[core:GetProfessionName(profName)][skillName][3]
+	local yellow = core.SpellData[core:GetProfessionName(profName)][skillName][2]
+	local orange = core.SpellData[core:GetProfessionName(profName)][skillName][1] 
 	local playerSkill = core:GetProfessionLevel()
 	
 	local chance
@@ -55,19 +61,40 @@ function core:GetChance(skillName, skillType, profName)
 
 	if (chance >= 1 or yellow == gray) then chance = 1 end
 
+	chance = core:Round((chance*100), 1)
 	return chance
 end
 
 -- Get number of available trade skills (without headers)
-function core:GetTradeSkillsHeaderless(...)
+function core:TradeSkillUpdateChance()
 	local skillName, skillType
-	for i=1, GetNumTradeSkills() do
+	for i=1, GetNumTradeSkills(), 1 do
+		local skillOffset = FauxScrollFrame_GetOffset(TradeSkillListScrollFrame);
+		local skillIndex = i + skillOffset
+
 		local profName = core:GetProfessionName()
-		skillName, skillType, _, _, _, _ = GetTradeSkillInfo(i)
+		local skillName, skillType, numAvailable, _, _, _ = GetTradeSkillInfo(skillIndex)
+		local skillButton = getglobal("TradeSkillSkill"..i)
+		
 		if (skillName and skillType ~= "header") then
 			local chance = core:GetChance(skillName, skillType, profName)
+			
+			if (chance == 0) then
+				break
+			end
 
-			-- Convert chance to percentage
+			if (numAvailable == 0) then
+				skillButton:SetText(" "..skillName.." {"..chance.."} ")
+			else
+				skillButton:SetText(" "..skillName.." ["..numAvailable.."] {"..chance.."}")
+			end
+
+			-- Test
+			--if (chance ~= 0) then
+			--	core:Print("SkillName: "..skillName.." | Chance: "..chance.."%")
+			--end
+			-- Test
+			
 		end
 	end
 end
