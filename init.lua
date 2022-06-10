@@ -66,5 +66,6 @@ function core:init(event)
 		end
 	end)
 
-	core:Print("Please report any bugs to: link")
+	--local githubLink = "https://github.com/Zsargul/SkillUpProbability"
+	--core:Print("Please report any bugs to: "..githubLink)
 end
