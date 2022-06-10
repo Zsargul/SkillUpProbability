@@ -1,15 +1,11 @@
-## Interface: 
-## Title: Craftulator
-## Notes: Cumulative crafting probability calculator
+## Interface: 20504 
+## Title: SkillUpProbability
+## Notes: Get percentage chance of a skill-up when crafting items
 ## Author: Shargul
 ## Version: 1.0.0
 ## DefaultState: enabled
 
-# For build info:
-# /run print((select(4, GetBuildInfo())))
-
 data/spellData.lua
 config.lua
-slashCommands.lua
-events.lua
+init.lua
 core.lua

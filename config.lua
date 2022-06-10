@@ -90,77 +90,59 @@ function core:SkillIsHeader(skillName, skillType)
     end
 end
 
--- Hook onto TradeSkillFrame_Update and append percentages to the end of spells
-LoadAddOn('Blizzard_TradeSkillUI')
-hooksecurefunc('TradeSkillFrame_Update', function()
-	if TradeSkillFrame:IsShown() then
-		local profName = core:GetProfessionName()
-		for i=1, TRADE_SKILLS_DISPLAYED do
-			(function()
-				local skillButton = _G['TradeSkillSkill'..i]
-				local skillIndex = skillButton:GetID()
-				local skillName, skillType, numAv, _, _, _ = GetTradeSkillInfo(skillIndex)
-				local playerSkill = core:GetProfessionLevel()
-				local chance
+-- For updating profession information
+function core:UpdateTradeSkill(i, profName)
+	local skillButton = _G['TradeSkillSkill'..i]
+	local skillIndex = skillButton:GetID()
+	local skillName, skillType, numAv, _, _, _ = GetTradeSkillInfo(skillIndex)
+	local playerSkill = core:GetProfessionLevel()
+	local chance
 
-				local isHeader = core:SkillIsHeader(skillName, skillType)
-				local isOther = core:SkillIsOther(skillName, skillType)
+	local isHeader = core:SkillIsHeader(skillName, skillType)
+	local isOther = core:SkillIsOther(skillName, skillType)
 
-				if (isHeader ~= 0 or isOther ~= 0 or not skillName) then
-					return 
-				end
-			
-				if (skillButton:IsShown()) then
-					chance = core:GetChance(skillName, profName, playerSkill)
-					if (chance > 0) then
-						if (numAv == 0) then
-							skillButton:SetText(" "..skillName.." ("..chance.."%)")
-						else
-							skillButton:SetText(" "..skillName.." ["..numAv.."] ("..chance.."%)")
-						end
-						return
-					end
-				end
-			end)()
+	if (isHeader ~= 0 or isOther ~= 0 or not skillName) then
+		return 
+	end
+
+	if (skillButton:IsShown()) then
+		chance = core:GetChance(skillName, profName, playerSkill)
+		if (chance > 0) then
+			if (numAv == 0) then
+				skillButton:SetText(" "..skillName.." ("..chance.."%)")
+			else
+				skillButton:SetText(" "..skillName.." ["..numAv.."] ("..chance.."%)")
+			end
+			return
 		end
 	end
-end)
+end
 
---[[ Account for Enchanting, because it uses the Craft API and not the TradeSkill API. May or may not become
--- deprecated in WOTLK Classic ]]--
-LoadAddOn('Blizzard_CraftUI')
-hooksecurefunc('CraftFrame_Update', function()
-	if CraftFrame:IsShown() then
-		local craftProfName, craftLevel, _ = GetCraftDisplaySkillLine()
-		for i=1, CRAFTS_DISPLAYED do
-			(function()
-				local craftButton = _G['Craft'..i]
-				local craftIndex = craftButton:GetID()
-				local craftBtnSubText = _G['Craft'..i..'SubText']
-				local craftBtnText = _G['Craft'..i..'Text']
-				local craftName, craftSubName, craftType, numAv, _, _, _ = GetCraftInfo(craftIndex)
-				local chance
+-- For updating craft information (Enchanting & Poisons)
+function core:UpdateCraftSkill(i, profName)
+	local craftButton = _G['Craft'..i]
+	local craftIndex = craftButton:GetID()
+	local craftBtnSubText = _G['Craft'..i..'SubText']
+	local craftBtnText = _G['Craft'..i..'Text']
+	local craftName, craftSubName, craftType, numAv, _, _, _ = GetCraftInfo(craftIndex)
+	local chance
 
-				local isHeader = core:SkillIsHeader(craftName, craftType)
-				local isOther = core:SkillIsOther(craftName, craftType)
+	local isHeader = core:SkillIsHeader(craftName, craftType)
+	local isOther = core:SkillIsOther(craftName, craftType)
 
-				if (isHeader ~= 0 or isOther ~= 0 or not craftName) then
-					return
-				end
+	if (isHeader ~= 0 or isOther ~= 0 or not craftName) then
+		return
+	end
 
-				if (craftButton:IsShown()) then
-					chance = core:GetChance(craftName, craftProfName, craftLevel)
-					if (chance > 0) then
-						if (numAv == 0) then
-							craftButton:SetText(" "..craftName.." ("..chance.."%)")
-						else
-							craftButton:SetText(" "..craftName.." ["..numAv.."] ("..chance.."%)")
-						end
-						return
-					end
-				end
-
-			end)()
+	if (craftButton:IsShown()) then
+		chance = core:GetChance(craftName, craftProfName, craftLevel)
+		if (chance > 0) then
+			if (numAv == 0) then
+				craftButton:SetText(" "..craftName.." ("..chance.."%)")
+			else
+				craftButton:SetText(" "..craftName.." ["..numAv.."] ("..chance.."%)")
+			end
+			return
 		end
 	end
-end)
+end
