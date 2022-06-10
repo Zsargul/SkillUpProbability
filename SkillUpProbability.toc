@@ -1,7 +1,7 @@
 ## Interface: 20504 
 ## Title: SkillUpProbability
 ## Notes: Get percentage chance of a skill-up when crafting items
-## Author: Shargul
+## Author: Zsargul
 ## Version: 1.0.0
 ## DefaultState: enabled
 
