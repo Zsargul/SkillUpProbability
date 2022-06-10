@@ -43,7 +43,7 @@ function core:TableHas(table, key)
 end
 
 -- Calculate the percentage chance of a spell giving a skill-up
-function core:GetChance(skillName, profName)
+function core:GetChance(skillName, profName, playerSkill)
 	--[[ Sometimes the hook on TradeSkillFrame_Update attempts to index profession/spell pairs that do not
 	-- exist, for example "Blacksmithing:Heavy Silk Bandage" or "First Aid:Silver Skeleton Key". I do not
 	-- know why this happens but I have added this check here to prevent it from throwing an error in-game,
@@ -56,7 +56,6 @@ function core:GetChance(skillName, profName)
 		local green = core.SpellData[profName][skillName][3]
 		local yellow = core.SpellData[profName][skillName][2]
 		local orange = core.SpellData[profName][skillName][1] 
-		local playerSkill = core:GetProfessionLevel()
 		
 		local chance
 		if (playerSkill >= gray) then
@@ -94,32 +93,74 @@ end
 -- Hook onto TradeSkillFrame_Update and append percentages to the end of spells
 LoadAddOn('Blizzard_TradeSkillUI')
 hooksecurefunc('TradeSkillFrame_Update', function()
-	local profName = core:GetProfessionName()
-	for i=1, TRADE_SKILLS_DISPLAYED do
-		(function()
-			local skillButton = _G['TradeSkillSkill'..i]
-			local skillIndex = skillButton:GetID()
-			local skillName, skillType, numAv, _, _, _ = GetTradeSkillInfo(skillIndex)
-			local chance
+	if TradeSkillFrame:IsShown() then
+		local profName = core:GetProfessionName()
+		for i=1, TRADE_SKILLS_DISPLAYED do
+			(function()
+				local skillButton = _G['TradeSkillSkill'..i]
+				local skillIndex = skillButton:GetID()
+				local skillName, skillType, numAv, _, _, _ = GetTradeSkillInfo(skillIndex)
+				local playerSkill = core:GetProfessionLevel()
+				local chance
 
-			local isHeader = core:SkillIsHeader(skillName, skillType)
-			local isOther = core:SkillIsOther(skillName, skillType)
+				local isHeader = core:SkillIsHeader(skillName, skillType)
+				local isOther = core:SkillIsOther(skillName, skillType)
 
-			if (isHeader ~= 0 or isOther ~= 0 or not skillName) then
-				return 
-			end
-		
-			if (skillButton:IsShown()) then
-				chance = core:GetChance(skillName, profName)
-				if (chance > 0) then
-					if (numAv == 0) then
-						skillButton:SetText(" "..skillName.." ("..chance.."%)")
-					else
-						skillButton:SetText(" "..skillName.." ["..numAv.."] ("..chance.."%)")
+				if (isHeader ~= 0 or isOther ~= 0 or not skillName) then
+					return 
+				end
+			
+				if (skillButton:IsShown()) then
+					chance = core:GetChance(skillName, profName, playerSkill)
+					if (chance > 0) then
+						if (numAv == 0) then
+							skillButton:SetText(" "..skillName.." ("..chance.."%)")
+						else
+							skillButton:SetText(" "..skillName.." ["..numAv.."] ("..chance.."%)")
+						end
+						return
 					end
+				end
+			end)()
+		end
+	end
+end)
+
+--[[ Account for Enchanting, because it uses the Craft API and not the TradeSkill API. May or may not become
+-- deprecated in WOTLK Classic ]]--
+LoadAddOn('Blizzard_CraftUI')
+hooksecurefunc('CraftFrame_Update', function()
+	if CraftFrame:IsShown() then
+		local craftProfName, craftLevel, _ = GetCraftDisplaySkillLine()
+		for i=1, CRAFTS_DISPLAYED do
+			(function()
+				local craftButton = _G['Craft'..i]
+				local craftIndex = craftButton:GetID()
+				local craftBtnSubText = _G['Craft'..i..'SubText']
+				local craftBtnText = _G['Craft'..i..'Text']
+				local craftName, craftSubName, craftType, numAv, _, _, _ = GetCraftInfo(craftIndex)
+				local chance
+
+				local isHeader = core:SkillIsHeader(craftName, craftType)
+				local isOther = core:SkillIsOther(craftName, craftType)
+
+				if (isHeader ~= 0 or isOther ~= 0 or not craftName) then
 					return
 				end
-			end
-		end)()
+
+				if (craftButton:IsShown()) then
+					chance = core:GetChance(craftName, craftProfName, craftLevel)
+					if (chance > 0) then
+						if (numAv == 0) then
+							craftButton:SetText(" "..craftName.." ("..chance.."%)")
+						else
+							craftButton:SetText(" "..craftName.." ["..numAv.."] ("..chance.."%)")
+						end
+						return
+					end
+				end
+
+			end)()
+		end
 	end
 end)
