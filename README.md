@@ -14,7 +14,8 @@ From [Curseforge](https://www.curseforge.com/wow/addons/skillupprobability) or y
 The calculations are based off of [the following formula](https://wowpedia.fandom.com/wiki/Profession#Increasing_professional_skill_level) from the game's wiki. 
 Contrary to what many think, the chances are not as simple as green, yellow and orange being 25%, 75% and 100% respectively. This add-on simply shows you the
 true probability of gaining a skill-up when crafting an item, displaying them beside each item's name in your trade-skill window. In other words, you can 
-now see why you crafted 30 green items in a row and still didn't hit a skill-up :P.
+now see why you crafted 30 green items in a row and still didn't hit a skill-up :P. Note that this add-on was created for TBC Classic, and has not been tested on 
+WoW Classic, although it may still work.
 
 ## Unsupported professions
 - Poisons for rogues (Planned)
