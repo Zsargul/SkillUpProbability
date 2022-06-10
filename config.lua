@@ -20,13 +20,6 @@ function core:GetProfessionLevel()
 	return select(2, GetTradeSkillLine())
 end
 
--- Get table length
-function core:GetTableLength(table)
-	local count = 0
-	for _ in pairs(table) do count = count + 1 end
-	return count
-end
-
 -- Get percentage chance of skill-up
 function core:CalcChance(graySkill, playerSkill, yellowSkill)
 	--[[ 
@@ -44,58 +37,89 @@ function core:Round(n, decimalPlaces)
 	return math.floor(n * mult + 0.5) / mult
 end
 
-function core:GetChance(skillName, skillType, profName)
-	local gray = core.SpellData[core:GetProfessionName(profName)][skillName][4]
-	local green = core.SpellData[core:GetProfessionName(profName)][skillName][3]
-	local yellow = core.SpellData[core:GetProfessionName(profName)][skillName][2]
-	local orange = core.SpellData[core:GetProfessionName(profName)][skillName][1] 
-	local playerSkill = core:GetProfessionLevel()
-	
-	local chance
-	if (playerSkill >= gray) then
-		chance = 0
-		return chance
+-- Check if a profession/spell pair exists
+function core:TableHas(table, key)
+	return core.SpellData[table][key] ~= nil
+end
+
+-- Calculate the percentage chance of a spell giving a skill-up
+function core:GetChance(skillName, profName)
+	--[[ Sometimes the hook on TradeSkillFrame_Update attempts to index profession/spell pairs that do not
+	-- exist, for example "Blacksmithing:Heavy Silk Bandage" or "First Aid:Silver Skeleton Key". I do not
+	-- know why this happens but I have added this check here to prevent it from throwing an error in-game,
+	-- as it does not actually affect the calculations of the add-on and is trivial ]]--
+	if (core:TableHas(profName, skillName) ~= true) then
+		return 0
 	else
-		chance = core:CalcChance(gray, playerSkill, yellow)
-	end
 
-	if (chance >= 1 or yellow == gray) then chance = 1 end
-
-	chance = core:Round((chance*100), 1)
-	return chance
-end
-
--- Get number of available trade skills (without headers)
-function core:TradeSkillUpdateChance()
-	local skillName, skillType
-	for i=1, GetNumTradeSkills(), 1 do
-		local skillOffset = FauxScrollFrame_GetOffset(TradeSkillListScrollFrame);
-		local skillIndex = i + skillOffset
-
-		local profName = core:GetProfessionName()
-		local skillName, skillType, numAvailable, _, _, _ = GetTradeSkillInfo(skillIndex)
-		local skillButton = getglobal("TradeSkillSkill"..i)
+		local gray = core.SpellData[profName][skillName][4]
+		local green = core.SpellData[profName][skillName][3]
+		local yellow = core.SpellData[profName][skillName][2]
+		local orange = core.SpellData[profName][skillName][1] 
+		local playerSkill = core:GetProfessionLevel()
 		
-		if (skillName and skillType ~= "header") then
-			local chance = core:GetChance(skillName, skillType, profName)
-			
-			if (chance == 0) then
-				break
-			end
-
-			if (numAvailable == 0) then
-				skillButton:SetText(" "..skillName.." {"..chance.."} ")
-			else
-				skillButton:SetText(" "..skillName.." ["..numAvailable.."] {"..chance.."}")
-			end
-
-			-- Test
-			--if (chance ~= 0) then
-			--	core:Print("SkillName: "..skillName.." | Chance: "..chance.."%")
-			--end
-			-- Test
-			
+		local chance
+		if (playerSkill >= gray) then
+			chance = 0
+			return chance
+		else
+			chance = core:CalcChance(gray, playerSkill, yellow)
 		end
+
+		if (chance >= 1 or yellow == gray) then chance = 1 end
+
+		chance = core:Round((chance*100), 1)
+		return chance
 	end
 end
 
+-- For some reason, the skill header "other" is sometimes not recognised as a header, and causes a bug if not accounted for
+function core:SkillIsOther(skillName, skillType)
+    if (skillName == 'Other' or skillType == 'Other') then
+        return 1 
+    else 
+        return 0
+    end
+end
+
+-- Find out if skill is a header
+function core:SkillIsHeader(skillName, skillType)
+    if (skillName == 'header' or skillType == 'header') then
+        return 1
+    else
+        return 0
+    end
+end
+
+-- Hook onto TradeSkillFrame_Update and append percentages to the end of spells
+LoadAddOn('Blizzard_TradeSkillUI')
+hooksecurefunc('TradeSkillFrame_Update', function()
+	local profName = core:GetProfessionName()
+	for i=1, TRADE_SKILLS_DISPLAYED do
+		(function()
+			local skillButton = _G['TradeSkillSkill'..i]
+			local skillIndex = skillButton:GetID()
+			local skillName, skillType, numAv, _, _, _ = GetTradeSkillInfo(skillIndex)
+			local chance
+
+			local isHeader = core:SkillIsHeader(skillName, skillType)
+			local isOther = core:SkillIsOther(skillName, skillType)
+
+			if (isHeader ~= 0 or isOther ~= 0 or not skillName) then
+				return 
+			end
+		
+			if (skillButton:IsShown()) then
+				chance = core:GetChance(skillName, profName)
+				if (chance > 0) then
+					if (numAv == 0) then
+						skillButton:SetText(" "..skillName.." ("..chance.."%)")
+					else
+						skillButton:SetText(" "..skillName.." ["..numAv.."] ("..chance.."%)")
+					end
+					return
+				end
+			end
+		end)()
+	end
+end)
