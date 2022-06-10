@@ -1,2 +1,24 @@
-# Skill-up Probability
-A W.I.P World of Warcraft: The Burning Crusade add-on which displays the probability of a skill-up upon crafting a certain trade-skill item
+# SkillUpProbability
+
+A simple trade-skill add-on for World of Warcraft: TBC Classic which displays the percentage chance of a skill-up beside your craftable items list in your 
+trade-skill window, like so:
+
+![Example image](https://github.com/Zsargul/SkillUpProbability/blob/main/images/sup1.png)
+
+Gray items don't display anything at all, since they are always 0%.
+
+## Download
+From [Curseforge](https://www.curseforge.com/wow/addons/skillupprobability) or you can just download a ```.zip``` of this repo and unzip it in your game's addons folder.
+
+## About
+The calculations are based off of [the following formula](https://wowpedia.fandom.com/wiki/Profession#Increasing_professional_skill_level) from the game's wiki. 
+Contrary to what many think, the chances are not as simple as green, yellow and orange being 25%, 75% and 100% respectively. This add-on simply shows you the
+true probability of gaining a skill-up when crafting an item, displaying them beside each item's name in your trade-skill window. In other words, you can 
+now see why you crafted 30 green items in a row and still didn't hit a skill-up :P.
+
+## Unsupported professions
+- Poisons for rogues (Planned)
+
+## Bug Reports
+Any bug reports or suggestions can be submitted in this repositories 'issues' section or on the [Curseforge](https://www.curseforge.com/wow/addons/skillupprobability) 
+page.
