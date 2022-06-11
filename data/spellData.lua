@@ -2210,4 +2210,8 @@ core.SpellData = {
                 ["Runed Copper Rod"]				= {1,5,7,10},
                 ["Arcane Dust"]					= {0,0,0,0}
 	}
+
+	-- Poisons
+	--["Poisons"] = {}
+
 }

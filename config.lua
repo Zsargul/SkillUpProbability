@@ -118,8 +118,14 @@ function core:UpdateTradeSkill(i, profName)
 	end
 end
 
--- For updating craft information (Enchanting & Poisons)
+-- For updating craft information (Enchanting)
 function core:UpdateCraftSkill(i, profName)
+	--[[ Enchanting is the only profession that I am aware of that uses the craft API, but
+	--   I am not taking any chances. ]]--
+	if (profName ~= "Enchanting") then 
+		return
+	end
+
 	local craftButton = _G['Craft'..i]
 	local craftIndex = craftButton:GetID()
 	local craftBtnSubText = _G['Craft'..i..'SubText']
