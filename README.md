@@ -8,7 +8,7 @@ trade-skill window, like so:
 Gray items don't display anything at all, since they are always 0%.
 
 ## Download
-From [Curseforge](https://www.curseforge.com/wow/addons/skillupprobability) or you can just download a ```.zip``` of this repo and unzip it in your game's addons folder.
+[Curseforge link](https://www.curseforge.com/wow/addons/skillupprobability)
 
 ## About
 The calculations are based off of [the following formula](https://wowpedia.fandom.com/wiki/Profession#Increasing_professional_skill_level) from the game's wiki. 
