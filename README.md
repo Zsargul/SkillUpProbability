@@ -9,6 +9,7 @@ Gray items don't display anything at all, since they are always 0%.
 
 ## Download
 [Curseforge](https://www.curseforge.com/wow/addons/skillupprobability)
+
 [WoWinterface](https://www.wowinterface.com/downloads/info26349-SkillUpProbability.html)
 
 ## About
