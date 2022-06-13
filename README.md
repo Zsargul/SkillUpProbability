@@ -19,9 +19,6 @@ true probability of gaining a skill-up when crafting an item, displaying them be
 now see why you crafted 30 green items in a row and still didn't hit a skill-up :P. Note that this add-on was created for TBC Classic, and has not been tested on 
 WoW Classic, although it may still work.
 
-## Unsupported professions
-- Poisons for rogues (Planned)
-
 ## Bug Reports
 Any bug reports or suggestions can be submitted in this repositories 'issues' section or on the [Curseforge](https://www.curseforge.com/wow/addons/skillupprobability) 
 page.
