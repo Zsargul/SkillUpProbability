@@ -2209,35 +2209,35 @@ core.SpellData = {
                 ["Lesser Magic Wand"]				= {10,75,95,115},
                 ["Runed Copper Rod"]				= {1,5,7,10},
                 ["Arcane Dust"]					= {0,0,0,0}
-	}
+	},
 
 	-- Poisons
 	["Poisons"] = {
-		["Poisons"]			= {0,0,0,0}
- 	        ["Instant Poison II"]		= {0,165,190,215}
-                ["Deadly Poison"]		= {0,175,200,225}
-                ["Mind-numbing Poison III"]	= {0,285,310,335}
-                ["Crippling Poison"]		= {0,125,150,175}
-                ["Instant Poison"]		= {0,125,150,175}
-                ["Mind-numbing Poison"]		= {0,150,175,200}
-                ["Wound Poison"]		= {0,185,210,235}
-                ["Crippling Poison II"]		= {0,275,300,325}
-                ["Deadly Poison V"]		= {0,300,325,350}
-                ["Anesthetic Poison"]		= {0,340,355,370}
-                ["Instant Poison VII"]		= {0,365,390,415}
-                ["Deadly Poison II"]		= {0,215,240,265}
-                ["Instant Poison IV"]		= {0,245,270,295}
-                ["Wound Poison III"]		= {0,265,290,315}
-                ["Wound Poison IV"]		= {0,305,330,355}
-                ["Instant Poison III"]		= {0,205,230,255}
-                ["Instant Poison V"]		= {0,285,310,335}
-                ["Deadly Poison III"]		= {0,255,280,305}
-                ["Deadly Poison IV"]		= {0,295,320,345}
-                ["Wound Poison II"]		= {0,225,250,275}
-                ["Wound Poison V"]		= {0,345,370,395}
-                ["Deadly Poison VII"]		= {0,385,405,425}
-                ["Instant Poison VI"]		= {0,325,350,375}
-                ["Mind-numbing Poison II"]	= {0,215,240,265}
+		["Poisons"]			= {0,0,0,0},
+ 	        ["Instant Poison II"]		= {0,165,190,215},
+                ["Deadly Poison"]		= {0,175,200,225},
+                ["Mind-numbing Poison III"]	= {0,285,310,335},
+                ["Crippling Poison"]		= {0,125,150,175},
+                ["Instant Poison"]		= {0,125,150,175},
+                ["Mind-numbing Poison"]		= {0,150,175,200},
+                ["Wound Poison"]		= {0,185,210,235},
+                ["Crippling Poison II"]		= {0,275,300,325},
+                ["Deadly Poison V"]		= {0,300,325,350},
+                ["Anesthetic Poison"]		= {0,340,355,370},
+                ["Instant Poison VII"]		= {0,365,390,415},
+                ["Deadly Poison II"]		= {0,215,240,265},
+                ["Instant Poison IV"]		= {0,245,270,295},
+                ["Wound Poison III"]		= {0,265,290,315},
+                ["Wound Poison IV"]		= {0,305,330,355},
+                ["Instant Poison III"]		= {0,205,230,255},
+                ["Instant Poison V"]		= {0,285,310,335},
+                ["Deadly Poison III"]		= {0,255,280,305},
+                ["Deadly Poison IV"]		= {0,295,320,345},
+                ["Wound Poison II"]		= {0,225,250,275},
+                ["Wound Poison V"]		= {0,345,370,395},
+                ["Deadly Poison VII"]		= {0,385,405,425},
+                ["Instant Poison VI"]		= {0,325,350,375},
+                ["Mind-numbing Poison II"]	= {0,215,240,265},
                 ["Deadly Poison VI"]		= {0,345,365,385}
 	}
 }

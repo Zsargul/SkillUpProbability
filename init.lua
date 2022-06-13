@@ -49,8 +49,12 @@ function core:init(event)
 	hooksecurefunc('TradeSkillFrame_Update', function()
 		if TradeSkillFrame:IsShown() then
 			local profName = core:GetProfessionName()
-			for i=1, TRADE_SKILLS_DISPLAYED do
-				core:UpdateTradeSkill(i, profName)
+			local tradeLevel = core:GetProfessionLevel()
+			local maxLevel = select(3, GetTradeSkillLine())
+			if maxLevel ~= tradeLevel then
+				for i=1, TRADE_SKILLS_DISPLAYED do
+					core:UpdateTradeSkill(i, profName)
+				end
 			end
 		end
 	end)
@@ -59,9 +63,11 @@ function core:init(event)
 	-- deprecated in WOTLK Classic ]]--
 	hooksecurefunc('CraftFrame_Update', function()
 		if CraftFrame:IsShown() then
-			local craftProfName, craftLevel, _ = GetCraftDisplaySkillLine()
-			for i=1, CRAFTS_DISPLAYED do
-				core:UpdateCraftSkill(i, profName)
+			local profName, craftLevel, maxLevel = GetCraftDisplaySkillLine()
+			if maxLevel ~= craftLevel then
+				for i=1, CRAFTS_DISPLAYED do
+					core:UpdateCraftSkill(i, profName)
+				end
 			end
 		end
 	end)

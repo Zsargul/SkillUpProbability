@@ -131,6 +131,7 @@ function core:UpdateCraftSkill(i, profName)
 	local craftBtnSubText = _G['Craft'..i..'SubText']
 	local craftBtnText = _G['Craft'..i..'Text']
 	local craftName, craftSubName, craftType, numAv, _, _, _ = GetCraftInfo(craftIndex)
+	local craftLevel = select(2, GetCraftDisplaySkillLine())
 	local chance
 
 	local isHeader = core:SkillIsHeader(craftName, craftType)
@@ -141,7 +142,7 @@ function core:UpdateCraftSkill(i, profName)
 	end
 
 	if (craftButton:IsShown()) then
-		chance = core:GetChance(craftName, craftProfName, craftLevel)
+		chance = core:GetChance(craftName, profName, craftLevel)
 		if (chance > 0) then
 			if (numAv == 0) then
 				craftButton:SetText(" "..craftName.." ("..chance.."%)")
