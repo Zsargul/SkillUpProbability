@@ -1,8 +1,8 @@
-## Interface: 20504 
+## Interface: 30400 
 ## Title: SkillUpProbability
 ## Notes: Get percentage chance of a skill-up when crafting items
 ## Author: Zsargul
-## Version: 1.0.0
+## Version: 1.2.0
 ## DefaultState: enabled
 
 data/spellData.lua
