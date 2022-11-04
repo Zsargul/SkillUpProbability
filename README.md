@@ -1,6 +1,6 @@
 # SkillUpProbability
 
-A simple trade-skill add-on for World of Warcraft: TBC Classic which displays the percentage chance of a skill-up beside your craftable items list in your 
+A simple trade-skill add-on for World of Warcraft: TBC/WOTLK Classic which displays the percentage chance of a skill-up beside your craftable items list in your 
 trade-skill window, like so:
 
 ![Example image](https://github.com/Zsargul/SkillUpProbability/blob/main/images/sup1.png)
