@@ -75,6 +75,7 @@ end
 -- For some reason, the skill header "other" is sometimes not recognised as a header, and causes a bug if not accounted for
 function core:SkillIsOther(skillName, skillType)
     if (skillName == 'Other' or skillType == 'Other') then
+		core:Print("Is other "..skillName)
         return 1 
     else 
         return 0
@@ -94,7 +95,7 @@ end
 function core:UpdateTradeSkill(i, profName)
 	local skillButton = _G['TradeSkillSkill'..i]
 	local skillIndex = skillButton:GetID()
-	local skillName, skillType, numAv, _, _, _ = GetTradeSkillInfo(skillIndex)
+	local skillName, skillType, _, _, _, _ = GetTradeSkillInfo(skillIndex)
 	local playerSkill = core:GetProfessionLevel()
 	local chance
 
@@ -108,11 +109,7 @@ function core:UpdateTradeSkill(i, profName)
 	if (skillButton:IsShown()) then
 		chance = core:GetChance(skillName, profName, playerSkill)
 		if (chance > 0) then
-			if (numAv == 0) then
-				skillButton:SetText(" "..skillName.." ("..chance.."%)")
-			else
-				skillButton:SetText(" "..skillName.." ["..numAv.."] ("..chance.."%)")
-			end
+			skillButton:SetText(" "..skillName.." ("..chance.."%)")
 			return
 		end
 	end
