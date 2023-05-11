@@ -75,7 +75,6 @@ end
 -- For some reason, the skill header "other" is sometimes not recognised as a header, and causes a bug if not accounted for
 function core:SkillIsOther(skillName, skillType)
     if (skillName == 'Other' or skillType == 'Other') then
-		core:Print("Is other "..skillName)
         return 1 
     else 
         return 0
