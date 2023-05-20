@@ -11,6 +11,8 @@ events.ef = CreateFrame("Frame")
 events.ef:RegisterEvent("ADDON_LOADED")
 events.ef:RegisterEvent("TRADE_SKILL_UPDATE")
 events.ef:RegisterEvent("TRADE_SKILL_CLOSE")
+events.ef:RegisterEvent("SKILL_LINES_CHANGED")
+events.ef:RegisterEvent("SPELLS_CHANGED")
 events.ef:RegisterEvent("CRAFT_UPDATE") -- For enchanting
 
 -- Main event handling function

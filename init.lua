@@ -59,6 +59,20 @@ function core:init(event)
 		end
 	end)
 
+	hooksecurefunc('UpdateSpells', function()
+		if TradeSkillFrame:IsShown() then
+			local profName = core:GetProfessionName()
+			local tradeLevel = core:GetProfessionLevel()
+			local maxLevel = select(3, GetTradeSkillLine())
+			if maxLevel ~= tradeLevel then
+				for i=1, TRADE_SKILLS_DISPLAYED do
+					core:UpdateTradeSkill(i, profName)
+				end
+			end
+		end
+	end)
+
+
 	--[[ Account for Enchanting and Poisons, because they use the Craft API and not the TradeSkill API. May or may not become
 	-- deprecated in WOTLK Classic ]]--
 	hooksecurefunc('CraftFrame_Update', function()
