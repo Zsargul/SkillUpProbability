@@ -59,20 +59,6 @@ function core:init(event)
 		end
 	end)
 
-	hooksecurefunc('UpdateSpells', function()
-		if TradeSkillFrame:IsShown() then
-			local profName = core:GetProfessionName()
-			local tradeLevel = core:GetProfessionLevel()
-			local maxLevel = select(3, GetTradeSkillLine())
-			if maxLevel ~= tradeLevel then
-				for i=1, TRADE_SKILLS_DISPLAYED do
-					core:UpdateTradeSkill(i, profName)
-				end
-			end
-		end
-	end)
-
-
 	--[[ Account for Enchanting and Poisons, because they use the Craft API and not the TradeSkill API. May or may not become
 	-- deprecated in WOTLK Classic ]]--
 	hooksecurefunc('CraftFrame_Update', function()
@@ -85,6 +71,31 @@ function core:init(event)
 			end
 		end
 	end)
+
+	--[[ Questie in WOTLK has a function in its file QuestieProfessions.lua called "Update" which is called on the event
+	-- SKILL_LINES_CHANGED. This overwrites the changes made by this addon's hook on TradeSkillFrame_Update and creates an unpleasant
+	-- bug that makes the percentages flicker on and off. ]]--
+	numAddons = GetNumAddOns()
+	questieName = ""
+	questieInstalled = false
+	for i = 1, numAddons
+	do
+		name, title, _, enabled, _, _, _ = GetAddOnInfo(i)
+		if string.match(title, "Questie") or string.match(title, "questie") then
+			questieName = name
+			questieInstalled = true
+			break
+		end
+	end
+
+	if questieInstalled == true then 
+		ret, res = LoadAddOn(questieName)
+		if not ret then
+			-- Do nothing
+		else
+			print(WrapTextInColorCode("SkillUpProbability: ", "FFFF0000").." If you are using "..WrapTextInColorCode("Questie", "FF00FF00").." there is currently a bug caused by conflicting code with that addOn that causes the percentage text to 'flicker' when you level up. Unfortunately a fix for this hasn't been found yet, although it's but a minor inconvenience.")
+		end
+	end
 
 	--local githubLink = "https://github.com/Zsargul/SkillUpProbability"
 	--core:Print("Please report any bugs to: "..githubLink)
